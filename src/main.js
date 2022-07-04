@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import WwButton from './components/Button.vue'
-import WwDialog from './components/Dialog.vue'
+import WwButton from './components/Button'
+import WwDialog from './components/Dialog'
 import './assets/fonts/iconfont.css'
 
 Vue.config.productionTip = false

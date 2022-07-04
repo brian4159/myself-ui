@@ -36,7 +36,7 @@
     <ww-button circle round plain icon="ww-icon -delete" type="danger" ></ww-button>
     </div> -->
     <ww-button type="primary" @click="visible = true">按钮</ww-button>
-    <ww-dialog width="60%" top="200px" :visible="visible" @close="fn">
+    <ww-dialog width="60%" top="200px" :visible="visible" @close="close">
       
       <template v-slot:footer>
          <ww-button @click="visible = false">确定</ww-button>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import vueConfig from 'vue.config'
+
 
 export default {
   data(){
@@ -57,7 +57,7 @@ export default {
     }
   },
   methods:{
-  fn(value){
+    close(value){
    this.visible=value
   },
   
