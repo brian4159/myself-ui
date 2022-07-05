@@ -1,5 +1,6 @@
 <template>
-  <div class="ww-dialog_wrapper" v-show="visible"  >
+<transition name="dialog-fade">
+  <div class="ww-dialog_wrapper" v-show="visible" @click.self="handleClose"  >
     <div class="ww-dialog" :style="{width,marginTop:top}">
         <div class="ww-dialog_header">
             <slot name="title" >
@@ -17,6 +18,7 @@
         </div>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -44,7 +46,7 @@ export default {
     },
     methods:{
          handleClose(){
-            this.$emit('close',false);
+            this.$emit('update:visible',false);
         }
         }
     }
