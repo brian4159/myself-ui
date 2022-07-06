@@ -1,19 +1,30 @@
 <template>
-    <div class="ww-input ">
+    <div class="ww-input" :class="{'ww-input_suffix':showSuffix}">
         <input 
         class="ww-input_inner  "
         :class="{'is-disabled':disabled}"
         :placeholder="placeholder"
-        :type ="type"
+        :type ="showPassword ? (passwordVisible ? 'text' : 'password') : type"
         :name="name"
         :disabled="disabled"
+        :value="value"
+        @input="handleInput"
         >
+        <span class="ww-input_suffix ">
+          <i class="ww-input_icon ww-icon-cancel" v-if="clearable && value" @click="clear"></i>
+          <i class="ww-input_icon ww-icon-visible" v-if="showPassword "  @click="handlePassword" :class="{ 'ww-icon-visible-active':passwordVisible}"></i>
+        </span>
     </div>
 </template>
 
 <script>
 export default {
     name:'WwInput',
+    data(){
+        return{
+          passwordVisible:false
+        }
+    },
     props:{
       placeholder:{
         type:String,
@@ -30,13 +41,42 @@ export default {
     disabled:{
       type:Boolean,
       default:false
+    },
+    value:{
+      type:String,
+      default:''  
+    },
+     clearable:{
+      type:Boolean,
+      default:false
+    },
+     showPassword:{
+      type:Boolean,
+      default:false
     }
-}}
+},  
+  methods:{
+    handleInput(e){
+      this.$emit('input',e.target.value);
+    },
+    clear () {
+      this.$emit('input', '')
+    },
+    handlePassword () {
+      this.passwordVisible = !this.passwordVisible
+    }
+  },
+  computed: {
+    showSuffix () {
+      return this.clearable || this.showPassword
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
   .ww-input{
-    width: 100%;
+    width: 180px;
     position: relative;
     font-size: 14px;
     display: inline-block;
@@ -90,6 +130,9 @@ export default {
         font-size: 14px;
         cursor: pointer;
         transition: color .2s cubic-bezier(.645,.045,.355,1);
+      }
+      .ww-icon-visible-active{
+        color:blue;
       }
     }
   }
