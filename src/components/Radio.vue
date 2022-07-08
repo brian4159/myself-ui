@@ -1,10 +1,13 @@
 <template>
-    <label class="ww-radio is-checked" >
+    <label   class="ww-radio" :class="{'is-checked' :model == label}" >
         <span class="ww-radio_input">
             <span class="ww-radio_inner"></span>
         <input
         class="ww-radio_original" 
         type="radio"
+        :value="label"
+        :name="name"
+        v-model="model"
         >
         </span>
         <span class="ww-radio_label">
@@ -17,10 +20,27 @@
 </template>
 
 <script>
-import Input from './Input.vue'
 export default {
-  components: { Input },
     name :"WwRadio",
+    inject:{
+      RadioGroup:{
+        default:'',
+      }
+    },
+    computed:{
+      model:{
+        get(){
+          return this.isGroup ? this.RadioGroup.value : this.value
+        },
+        set(value){
+          
+          this.isGroup ? this.RadioGroup.$emit('input',value) : this.$emit('input',value)
+        }
+      },
+      isGroup(){
+        return !!this.RadioGroup
+      }
+    },
     props:{
         label:{
             type:[String,Number,Boolean],
